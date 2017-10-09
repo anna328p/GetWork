@@ -1,0 +1,31 @@
+doctype html
+html
+	head
+		title = yield :title
+		= csrf_meta_tags
+		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+		= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+	body
+		header.page-header
+			nav.green#page-nav
+				.container
+					.row
+						.col.s12
+							.nav-wrapper
+								a.brand-logo = yield :title
+							ul.right#nav-mobile
+								li: a Profile
+								li: a Username
+								- if user_signed_in?
+									li = link_to 'Log out', destroy_user_session_path, :method => :delete
+									li = link_to "<img class=\"profile-img\" src=\"#{current_user.image}\"></img>".html_safe, user_path(current_user)
+								- else
+									li = link_to 'Log in', user_google_oauth2_omniauth_authorize_path
+			p.green = notice
+			p.red = alert
+		main
+			.container = yield
+		footer.page-footer.green
+			.container
+				.col.s12
+					p: strong T H I C C
