@@ -6,6 +6,12 @@
 .row
 	.col.s12
 		.section
+			h3 Tags
+			- Tag.all.each do |tag|
+				p = link_to tag.name, tag
+/.row
+	.col.s12
+		.section
 			h3 Tag cloud
 			.tags-cloud
 				- tag_cloud Tag.counts, %w{css1 css2 css3 css4} do |tag, css_class|
