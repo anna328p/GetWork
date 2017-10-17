@@ -1,17 +1,20 @@
 = form_for @project do |f|
-  - if @project.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
-      ul
-        - @project.errors.full_messages.each do |message|
-          li = message
+	- if @project.errors.any?
+		#error_explanation
+			h2 = "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+			ul
+				- @project.errors.full_messages.each do |message|
+					li = message
 
-  .input-field
-    = f.label :title
-    = f.text_field :title
-  .input-field
-    = f.label :description
-    = f.text_area :description, class: 'materialize-textarea'
-  .chips.chips-placeholder#chips-tag-input
-  p Press enter to use a tag.
-  .actions = f.submit
+	p What are you looking for?
+	.input-field
+		= f.label :title
+		= f.text_field :title
+	p Describe what you need help doing.
+	.input-field
+		= f.label :description
+		= f.text_area :description, class: 'materialize-textarea'
+	p Add tags to your project so other people can find it.
+	.chips.chips-placeholder#chips-tag-input
+	p Press enter to use a tag.
+	.actions = f.submit

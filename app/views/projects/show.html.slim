@@ -1,21 +1,39 @@
 - content_for :title, @project.title
-p
-	strong Title:
-	= @project.title
-p
-	strong Description:
-	= @project.description
-p
-	strong User:
-	= link_to @project.user.name, @project.user
-p
-	strong Tags:
-	= @project.taggings.map {|t| link_to t.tag.name, t.tag}.join(", ").html_safe
 
-- if can? :update, @project
-	= link_to 'Edit', edit_project_path(@project)
-	'	|
-- if can? :destroy, @project
-	= link_to 'Destroy', @project, data: { confirm: 'Are you sure?' }, method: :delete
-	'	|
+.col.s12
+	.section
+		h4 = @project.title
+		p = @project.description
+		p Created by #{link_to @project.user.name, @project.user} at #{@project.created_at}
+
+		p
+			strong Tags:&nbsp;
+			= @project.taggings.map {|t| link_to t.tag.name, t.tag}.join(", ").html_safe
+
+		- if can? :update, @project
+			= link_to 'Edit', edit_project_path(@project)
+			'	|
+		- if can? :destroy, @project
+			= link_to 'Destroy', @project, data: { confirm: 'Are you sure?' }, method: :delete
+	.section
+		h5 Comments
+		- if can? :create, Comment
+			h6 Add a comment:
+			= form_with model: [@project, @project.comments.build], local: true do |f|
+				.input-field
+					= f.text_field :title
+					= f.label :title
+				.input-field
+					= f.text_area :body, class: 'materialize-textarea'
+					= f.label :body, 'Comment'
+				= f.submit 'Save', class: 'waves-effect waves-light btn blue'
+	- @project.comments.all.each do |comment|
+		.section
+			.divider
+			p Comment by #{link_to comment&.user&.name, comment&.user} at #{comment.updated_at}
+			strong = comment.title
+			p = comment.body
+			- if can? :destroy, comment
+				/= link_to 'Delete', @project.comment, data: { confirm: 'Are you sure?' }, method: :delete
+
 = link_to 'Back', projects_path

@@ -5,16 +5,25 @@ class Ability
 		# Define abilities for the passed in user here. For example:
 		#
 		user ||= User.new(admin: false, guest: true) # guest user (not logged in)
-		if user.admin?
+		if user.admin
 			can :manage, :all
 		else
 			can :read, :all
 		end
-    can :create, Project
+		unless user.guest
+			can :create, Project
+			can :create, Comment
+		end
 		Project.all.each do |p|
 			if p.user.id == user.id
 				can :update, p
 				can :destroy, p
+			end
+			p.comments.each do |c|
+				if c.user.id == user.id
+					can :update, c
+					can :destroy, c
+				end
 			end
 		end
 		#
