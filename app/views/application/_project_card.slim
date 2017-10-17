@@ -1,0 +1,7 @@
+.card.blue-grey.darken-1.fullwidth width="100%"
+  .card-content.white-text
+    span.card-title = link_to p.title, project_path(p), class: 'white-text'
+    p = p.description
+    p
+      strong Tags:&nbsp;
+      = p.taggings.map {|t| link_to t.tag.name, t.tag}.join(", ").html_safe

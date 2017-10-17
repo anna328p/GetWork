@@ -1,15 +1,21 @@
-p#notice = notice
+- content_for :title, @project.title
+p
+	strong Title:
+	= @project.title
+p
+	strong Description:
+	= @project.description
+p
+	strong User:
+	= link_to @project.user.name, @project.user
+p
+	strong Tags:
+	= @project.taggings.map {|t| link_to t.tag.name, t.tag}.join(", ").html_safe
 
-p
-  strong Title:
-  = @project.title
-p
-  strong Description:
-  = @project.description
-p
-  strong User:
-  = @project.user
-
-= link_to 'Edit', edit_project_path(@project)
-'  |
+- if can? :update, @project
+	= link_to 'Edit', edit_project_path(@project)
+	'	|
+- if can? :destroy, @project
+	= link_to 'Destroy', @project, data: { confirm: 'Are you sure?' }, method: :delete
+	'	|
 = link_to 'Back', projects_path

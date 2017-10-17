@@ -4,7 +4,7 @@ html
 		title = yield :title
 		= csrf_meta_tags
 		= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
-		= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
+		link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
 	body
 		header.page-header
 			nav.green#page-nav
@@ -12,10 +12,10 @@ html
 					.row
 						.col.s12
 							.nav-wrapper
-								a.brand-logo = yield :title
+								a.brand-logo href=root_path = yield :title
 							ul.right#nav-mobile
-								li: a Profile
-								li: a Username
+								li = link_to "Home", root_path
+								li = link_to "Projects", projects_path
 								- if user_signed_in?
 									li = link_to 'Log out', destroy_user_session_path, :method => :delete
 									li = link_to "<img class=\"profile-img\" src=\"#{current_user.image}\"></img>".html_safe, user_path(current_user)
@@ -25,7 +25,8 @@ html
 			p.red = alert
 		main
 			.container = yield
-		footer.page-footer.green
+		/footer.page-footer.green
 			.container
 				.col.s12
-					/p: strong.green-text E X T R A T H I C C
+					p: strong.green-text E X T R A T H I C C
+		= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'

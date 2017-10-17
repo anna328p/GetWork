@@ -1,0 +1,6 @@
+- content_for :title, @tag.name
+
+.row
+	.col.s12.cards-container
+		- @tag.projects.each do |p|
+				= render partial: 'application/project_card', locals: {p: p}

@@ -10,7 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171013201751) do
+ActiveRecord::Schema.define(version: 20171016204640) do
+
+  create_table "comments", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
@@ -22,11 +27,11 @@ ActiveRecord::Schema.define(version: 20171013201751) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "post_id"
+    t.integer "project_id"
     t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_taggings_on_post_id"
+    t.index ["project_id"], name: "index_taggings_on_project_id"
     t.index ["tag_id"], name: "index_taggings_on_tag_id"
   end
 

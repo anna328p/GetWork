@@ -16,3 +16,11 @@
 //= require materialize-sprockets
 //= require_tree .
 //= require turbolinks
+
+$(document).ready(function() {
+  Materialize.updateTextFields();
+  $('.chips-placeholder').material_chip({
+    placeholder: 'Enter tags',
+    secondaryPlaceholder: '+Tag'
+  });
+});
